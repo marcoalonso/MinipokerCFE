@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Tablero View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MiniPokerCFE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TableroViewController" customModule="MiniPokerCFE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,7 +98,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="4nI-Ed-K0N" kind="show" id="pPH-CG-3qf"/>
+                                                    <action selector="apostarButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kGQ-Fz-bQs"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -125,6 +125,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="f9r-8Q-o2y" secondAttribute="trailing" id="s7t-tA-9gk"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="0YB-KP-2Q9"/>
                     <connections>
                         <outlet property="cantidadApuestaLabel" destination="auB-d0-bpJ" id="Ist-WB-3Mv"/>
                         <outlet property="carta1" destination="R3F-Yf-Dhm" id="3lc-Jl-XZi"/>
@@ -132,21 +133,22 @@
                         <outlet property="carta3" destination="4Bz-lv-ypS" id="V5G-0d-jCE"/>
                         <outlet property="carta4" destination="fxI-vl-bRF" id="4uh-0T-uf1"/>
                         <outlet property="carta5" destination="Wjz-lj-5N0" id="b54-nD-GRO"/>
+                        <segue destination="4nI-Ed-K0N" kind="show" identifier="apostar" id="Irc-JV-mYK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-75.362318840579718" y="69.642857142857139"/>
         </scene>
-        <!--View Controller-->
+        <!--Apuesta View Controller-->
         <scene sceneID="iQR-cg-f2r">
             <objects>
-                <viewController id="4nI-Ed-K0N" sceneMemberID="viewController">
+                <viewController id="4nI-Ed-K0N" customClass="ApuestaViewController" customModule="MiniPokerCFE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="21t-Tk-Gu0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apuesta Actual $ 0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQD-ph-J3K">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQD-ph-J3K">
                                 <rect key="frame" x="20" y="88" width="374" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="WzT-a8-zfL"/>
@@ -161,7 +163,7 @@
                                     <constraint firstAttribute="height" constant="40" id="ZXb-Pd-4qg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¿Cuanto quieres apostar?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WwE-ay-edd">
                                 <rect key="frame" x="75" y="360" width="246" height="41"/>
@@ -191,6 +193,10 @@
                                         <integer key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="apostarButton:" destination="4nI-Ed-K0N" eventType="touchUpInside" id="ZMp-7i-0pM"/>
+                                    <segue destination="TSi-U8-BFM" kind="unwind" unwindAction="recibirApuestaWithSegue:" id="Gdt-2h-9lp"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="A29-ns-cQl"/>
@@ -215,10 +221,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Vfk-wY-6MS"/>
+                    <connections>
+                        <outlet property="apuestaActualLabel" destination="LQD-ph-J3K" id="3ek-yM-ExE"/>
+                        <outlet property="cantidadApuestaTextField" destination="wgY-Cq-rtC" id="Xax-Ta-pWY"/>
+                        <outlet property="imagenApuesta" destination="MMM-g6-HVb" id="kvK-1W-EF9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IGT-FS-aXe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="TSi-U8-BFM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="720" y="70"/>
+            <point key="canvasLocation" x="748" y="70"/>
         </scene>
     </scenes>
     <resources>

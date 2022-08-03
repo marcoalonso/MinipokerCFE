@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TableroViewController: UIViewController {
 
     @IBOutlet weak var cantidadApuestaLabel: UILabel!
     
@@ -29,6 +29,23 @@ class ViewController: UIViewController {
     }
 
     // MARK: Funciones
+    
+    
+    
+    @IBAction func apostarButton(_ sender: UIButton) {
+        
+        //Ayuda a navagear entre ventanas
+        performSegue(withIdentifier: "apostar", sender: self)
+    }
+    
+    //mandar informacion de una view a otra
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "apostar" {
+            let objDestino = segue.destination as! ApuestaViewController
+            //modificar los atributos del 2 ViewController
+            objDestino.apuesta = cantidadApuestaLabel.text ?? "0"
+        }
+    }
 
     @IBAction func jugarButton(_ sender: UIButton) {
         
@@ -46,5 +63,13 @@ class ViewController: UIViewController {
         carta5.image = baraja[num5]
     }
     
+    // MARK: - Traer info de la 2 pantalla a la Primera (Este)
+    @IBAction func recibirApuesta(segue: UIStoryboardSegue){
+        //crea una variable segura (safe-unwrapp)  llamada recibirApuesta
+        if let recibirApuesta = segue.source as? ApuestaViewController {
+           //mostrar la apuesta de la 2 pantalla en mi label
+            cantidadApuestaLabel.text = recibirApuesta.apuestaActualLabel.text
+        }
+    }
 }
 
